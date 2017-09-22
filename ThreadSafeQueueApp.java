@@ -112,16 +112,3 @@ public class ThreadSafeQueueApp {
 
     }
 }
-interface ITest {
-    void dummy() throws Exception;
-}
-class ClsTest implements ITest {
-    public void dummy() {
-    }
-}
-class Dummy {
-    void dummy() {
-        if (true) {
-        }
-    }
-}

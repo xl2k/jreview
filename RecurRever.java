@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 
 public class RecurRever {
 
+	@SuppressWarnings("unchecked")
 	private static<T> T[] concatArrays(T[] a, T[] b) {
 
 		List<T> lst = new ArrayList<T>();
@@ -12,18 +13,19 @@ public class RecurRever {
 		Collections.addAll(lst, a);
 		Collections.addAll(lst, b);
  
-		return (T[])lst.toArray(a); // revisit this, why casting like that? 
-
+		return lst.toArray(a); // the param "a" in toArray method drives the return value type
 	}
 
+	@SuppressWarnings("unchecked")
 	private static<T> T[] headArray(T[] a) {
 
 		T[] h = (T[])Array.newInstance(a[0].getClass(), 1);   // Only one element with head
 		h[0] = a[0];
 
-		return (T[])h; 
+		return h; 
 	}
 
+	@SuppressWarnings("unchecked")
 	private static<T> T[] tailArray(T[] a) {
 		
 		int i = 1;      //start index
@@ -33,10 +35,11 @@ public class RecurRever {
 		for (int x=0; x<j; x++) {
 			subArray[x] = a[x+1];
 		} 
-		return (T[])subArray;
+		return subArray;
 	
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T[] reverse(T[] a) {
 
 
@@ -47,7 +50,7 @@ public class RecurRever {
 			T[] head = headArray(a);
 			T[] tail = tailArray(a);
 
-			return (T[])concatArrays(reverse(tail), head);
+			return concatArrays(reverse(tail), head);
         }
 	} 
     public static <T> void display(T[] i) {
@@ -55,6 +58,11 @@ public class RecurRever {
             System.out.println(x);
         }
     }
+
+	@Override
+	public String toString() {
+		return "dummy";	
+	}
 	public static void main(String[] args) {
 
 
@@ -70,4 +78,5 @@ public class RecurRever {
 		display(y);
 
 	}
+
 }

@@ -11,9 +11,18 @@ class Listener implements IListen{ // will call back after long running proc
     }
     
 }
-public class CallbackApp {
+public class CallbackApp extends Thread {
     
     private List<IListen> lns = new ArrayList<IListen>();
+
+    public CallbackApp() {
+    }
+
+    public CallbackApp(IListen ln) {
+
+        addListener(ln);
+
+    }
 
     public void addListener(IListen ln) {
         lns.add(ln);
@@ -25,25 +34,23 @@ public class CallbackApp {
         }
     }
 
-    public void longRunProc(CallbackApp app) {
+    private void longRunProc() {
 
-        new Thread(new Runnable() {
-            public void run() {
-                System.out.println("long running proc...");
-                app.trigger(); // here is the call back
-            }
-        }).start();
+        System.out.println("long running proc...");
+
+    }
+
+    public void run() {
+
+        longRunProc();        
+        trigger();   // here is the call back
 
     }
 
     public static void main(String[] args) {
 
 
-        CallbackApp app = new CallbackApp();
-
-        app.addListener(new Listener());
-
-        app.longRunProc(app);
+        new CallbackApp(new Listener()).start();
 
         System.out.println("done");
 
